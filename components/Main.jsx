@@ -1,4 +1,4 @@
-import { Text, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { useState, useEffect } from "react";
 import { AnimatedArtworkCard } from "./ArtworkCard";
 import { Screen } from "./Screen";
@@ -6,7 +6,7 @@ import { LoaderScreen } from "./LoaderScreen";
 import { ErrorScreen } from "./ErrorScreen";
 
 export function Main() {
-  const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -41,19 +41,19 @@ export function Main() {
     return <ErrorScreen error={error} />;
   }
 
+  if (!artworks) {
+    return <ErrorScreen error="No artworks found" />;
+  }
+
   return (
     <Screen>
-      {artworks.length === 0 ? (
-        <Text className="text-center text-base mt-5">No artworks found</Text>
-      ) : (
-        <FlatList
-          data={artworks}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item, index }) => (
-            <AnimatedArtworkCard artwork={item} index={index} />
-          )}
-        />
-      )}
+      <FlatList
+        data={artworks}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item, index }) => (
+          <AnimatedArtworkCard artwork={item} index={index} />
+        )}
+      />
     </Screen>
   );
 }

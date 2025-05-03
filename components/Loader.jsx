@@ -5,7 +5,7 @@ export const Loader = () => {
   return (
     <View>
       <ActivityIndicator size="large" color="#0000ff" />
-      <Text className="mt-10 text-align-center">Loading artworks...</Text>
+      <Text className="mt-10 text-center">Loading artworks...</Text>
     </View>
   );
 };

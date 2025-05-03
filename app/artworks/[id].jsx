@@ -10,7 +10,7 @@ export default function Artwork() {
   const params = useLocalSearchParams();
   const artworkId = params.id || params.toString();
 
-  const [artwork, setArtwork] = useState([]);
+  const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -45,6 +45,10 @@ export default function Artwork() {
 
   if (error) {
     return <ErrorScreen error={error} />;
+  }
+
+  if (!artwork) {
+    return <ErrorScreen error={`No artwork found with id: ${artworkId}`} />;
   }
 
   return (
