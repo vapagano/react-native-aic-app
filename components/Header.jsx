@@ -32,4 +32,9 @@ const styles = StyleSheet.create({
   subtitle: {
     color: "#555",
   },
+  link: {
+    marginLeft: "auto",
+    color: "#0066cc",
+    padding: 8,
+  },
 });

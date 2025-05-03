@@ -1,9 +1,9 @@
-import { StyleSheet, Text, FlatList } from "react-native";
+import { Text, FlatList } from "react-native";
 import { useState, useEffect } from "react";
 import { AnimatedArtworkCard } from "./ArtworkCard";
-import { Loader } from "./Loader";
-import { SafeContainer } from "./SafeContainer";
-import { Header } from "./Header";
+import { Screen } from "./Screen";
+import { LoaderScreen } from "./LoaderScreen";
+import { ErrorScreen } from "./ErrorScreen";
 
 export function Main() {
   const [artworks, setArtworks] = useState([]);
@@ -34,22 +34,17 @@ export function Main() {
   }, []);
 
   if (loading) {
-    return <Loader />;
+    return <LoaderScreen />;
   }
 
   if (error) {
-    return (
-      <SafeContainer>
-        <Text style={styles.errorText}>{error}</Text>
-      </SafeContainer>
-    );
+    return <ErrorScreen error={error} />;
   }
 
   return (
-    <SafeContainer>
-      <Header />
+    <Screen>
       {artworks.length === 0 ? (
-        <Text style={styles.noData}>No artworks found</Text>
+        <Text className="text-center text-base mt-5">No artworks found</Text>
       ) : (
         <FlatList
           data={artworks}
@@ -59,23 +54,6 @@ export function Main() {
           )}
         />
       )}
-    </SafeContainer>
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  errorText: {
-    color: "red",
-    textAlign: "center",
-    fontSize: 16,
-  },
-  noData: {
-    textAlign: "center",
-    fontSize: 16,
-    marginTop: 20,
-  },
-});
